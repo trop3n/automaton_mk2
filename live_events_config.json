@@ -1,0 +1,140 @@
+{
+  "events": {
+    "4590739": {
+      "name": "Worship Service - Contemporary",
+      "folder": "Worship Services",
+      "folder_id": "15749517",
+      "services": [
+        {
+          "day": "Sunday",
+          "stream_time": "09:30",
+          "expected_duration_minutes": 60,
+          "time_window": {
+            "start": "10:15",
+            "end": "12:00"
+          },
+          "title_format": "YYYY-MM-DD - 0930 - Contemporary",
+          "confidence_weight": 1.0
+        },
+        {
+          "day": "Sunday",
+          "stream_time": "11:00",
+          "expected_duration_minutes": 60,
+          "time_window": {
+            "start": "11:45",
+            "end": "13:30"
+          },
+          "title_format": "YYYY-MM-DD - 1100 - Contemporary",
+          "confidence_weight": 1.0
+        }
+      ]
+    },
+    "3261302": {
+      "name": "Worship Service - Traditional",
+      "folder": "Worship Services",
+      "folder_id": "15749517",
+      "services": [
+        {
+          "day": "Saturday",
+          "stream_time": "17:30",
+          "expected_duration_minutes": 60,
+          "time_window": {
+            "start": "18:15",
+            "end": "20:00"
+          },
+          "title_format": "YYYY-MM-DD - 1730 - Traditional",
+          "confidence_weight": 1.0
+        },
+        {
+          "day": "Sunday",
+          "stream_time": "09:30",
+          "expected_duration_minutes": 60,
+          "time_window": {
+            "start": "10:15",
+            "end": "12:00"
+          },
+          "title_format": "YYYY-MM-DD - 0930 - Traditional",
+          "confidence_weight": 1.0
+        },
+        {
+          "day": "Sunday",
+          "stream_time": "11:00",
+          "expected_duration_minutes": 60,
+          "time_window": {
+            "start": "11:45",
+            "end": "13:30"
+          },
+          "title_format": "YYYY-MM-DD - 1100 - Traditional",
+          "confidence_weight": 1.0
+        }
+      ]
+    },
+    "3868173": {
+      "name": "Class - The Root Class",
+      "folder": "The Root Class",
+      "folder_id": "10606776",
+      "services": [
+        {
+          "day": "Sunday",
+          "stream_time": "09:30",
+          "expected_duration_minutes": 60,
+          "time_window": {
+            "start": "10:15",
+            "end": "12:00"
+          },
+          "title_format": "YYYY-MM-DD - 0930 - The Root Class",
+          "confidence_weight": 1.0
+        }
+      ]
+    },
+    "3378887": {
+      "name": "Class - Something Else Class",
+      "folder": "Scott's Classes",
+      "folder_id": "15680946",
+      "services": [
+        {
+          "day": "Sunday",
+          "stream_time": "11:00",
+          "expected_duration_minutes": 60,
+          "time_window": {
+            "start": "11:45",
+            "end": "13:30"
+          },
+          "title_format": "YYYY-MM-DD - 1100 - Something Else Class",
+          "confidence_weight": 1.0
+        }
+      ]
+    }
+  },
+  "settings": {
+    "timezone": "America/Chicago",
+    "lookback_hours": 48,
+    "run_schedule": {
+      "day": "Sunday",
+      "time": "17:00"
+    },
+    "min_confidence": 0.95,
+    "weekend_only": true,
+    "excluded_folders": ["11103430", "182762", "8219992"],
+    "destination_folders": {
+      "Worship Services": "15749517",
+      "Weddings and Memorials": "2478125",
+      "Scott's Classes": "15680946",
+      "The Root Class": "10606776"
+    }
+  },
+  "notifications": {
+    "email": {
+      "enabled": true,
+      "smtp_server": "smtp.gmail.com",
+      "smtp_port": 587,
+      "use_tls": true,
+      "from_address": "livestream@standrewmethodist.org",
+      "from_password": "YOUR_APP_PASSWORD_HERE",
+      "to_addresses": ["livestream@standrewmethodist.org"],
+      "notify_on_success": true,
+      "notify_on_review": true,
+      "notify_on_error": true
+    }
+  }
+}

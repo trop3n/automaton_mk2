@@ -19,35 +19,15 @@ VIMEO_CLIENT_SECRET = os.environ.get("VIMEO_CLIENT_SECRET")
 TIMEZONE = "America/Chicago"
 
 # Time window to check for recent videos (in hours)
-LOOKBACK_HOURS = 72  # Increased to 72 hours for debugging
+LOOKBACK_HOURS = 48
 
 # DEBUG MODE: When True, will show metadata for already-processed videos without moving them
-DEBUG_MODE = True
+DEBUG_MODE = False
 
-# --- Classification Time Windows Configuration ---
-# These windows are based on when videos finish processing (modified_time)
-# Format: (start_hour, start_minute, end_hour, end_minute)
-
-SATURDAY_SERVICE_WINDOW = {
-    "Traditional 5:30 PM": {
-        "start": (18, 15),  # 6:15 PM
-        "end": (21, 0),  # 9:00 PM
-        "service_date": 0,  # Same day (Saturday)
-    }
-}
-
-SUNDAY_SERVICE_WINDOWS = {
-    "9:30 AM": {
-        "start": (10, 15),  # 10:15 AM
-        "end": (11, 0),  # 11:00 AM
-        "service_date": 0,  # Same day (Sunday)
-    },
-    "11:00 AM": {
-        "start": (11, 45),  # 11:45 AM
-        "end": (13, 30),  # 1:30 PM
-        "service_date": 0,  # Same day (Sunday)
-    },
-}
+# --- Service Time Options ---
+# For Sunday services, user will be prompted to select the correct time
+SUNDAY_SERVICE_TIMES = ["9:30 AM", "11:00 AM"]
+SATURDAY_SERVICE_TIME = "5:30 PM"
 
 # The Root Class time windows
 ROOT_CLASS_WINDOWS = {
@@ -78,74 +58,6 @@ def get_vimeo_client(token, key, secret):
     """Initializes and returns the Vimeo client using token, key, and secret."""
     client = VimeoClient(token=token, key=key, secret=secret)
     return client
-
-
-def print_video_debug_info(video_data, local_tz, client=None):
-    """
-    Prints comprehensive debug information about a video's metadata.
-    """
-    print("\n" + "=" * 60)
-    print("DEBUG: VIDEO METADATA")
-    print("=" * 60)
-
-    # Basic info
-    print(f"Title: {video_data.get('name', 'N/A')}")
-    print(f"URI: {video_data.get('uri', 'N/A')}")
-    print(f"Duration: {video_data.get('duration', 0)} seconds")
-    print(f"Is Playable: {video_data.get('is_playable', False)}")
-
-    # Timestamps
-    print("\n--- TIMESTAMPS ---")
-    for field in ["created_time", "modified_time", "release_time"]:
-        if video_data.get(field):
-            try:
-                dt_utc = datetime.fromisoformat(
-                    video_data[field].replace("Z", "+00:00")
-                )
-                dt_local = dt_utc.astimezone(local_tz)
-                print(f"{field:20s}: {video_data[field]} (UTC)")
-                print(
-                    f"{'':20s}  -> {dt_local.strftime('%Y-%m-%d %I:%M:%S %p %Z')} (Local)"
-                )
-            except:
-                print(f"{field:20s}: {video_data[field]} (parse error)")
-        else:
-            print(f"{field:20s}: NOT PRESENT")
-
-    # Live event data
-    print("\n--- LIVE EVENT DATA ---")
-    live_data = video_data.get("live")
-    if live_data:
-        print(json.dumps(live_data, indent=2))
-    else:
-        print("No live event data present")
-
-    # Try to fetch full video details for additional fields
-    if client:
-        try:
-            print("\n--- FETCHING FULL VIDEO DETAILS ---")
-            response = client.get(video_data['uri'])
-            if response.status_code == 200:
-                full_data = response.json()
-
-                # Check for any live-related fields
-                if 'live' in full_data and full_data['live']:
-                    print("Full live event data from detailed fetch:")
-                    print(json.dumps(full_data['live'], indent=2))
-
-                # Check for content rating or tags that might indicate time
-                if 'tags' in full_data:
-                    print(f"\nTags: {full_data.get('tags', [])}")
-
-                if 'description' in full_data:
-                    print(f"\nDescription: {full_data.get('description', 'N/A')}")
-
-        except Exception as e:
-            print(f"Could not fetch full video details: {e}")
-
-    print("=" * 60 + "\n")
-
-    return live_data
 
 
 def is_time_in_window(dt, start_tuple, end_tuple):

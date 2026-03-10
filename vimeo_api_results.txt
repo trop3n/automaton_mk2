@@ -1,0 +1,6 @@
+{
+    "error": "Something strange occurred. Please try again.",
+    "link": null,
+    "developer_message": "The specified resource doesn't exist.",
+    "error_code": 5000
+}
